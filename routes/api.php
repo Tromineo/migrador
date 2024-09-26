@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 
 
 Route::get('/', [App\Http\Controllers\SyncJob::class, 'index']);
+Route::post('/sync', [App\Http\Controllers\SyncJob::class, 'store']);
