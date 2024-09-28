@@ -13,6 +13,8 @@ class SyncJob extends Controller
 
     public function store(Request $request)
     {
+
+        $dry = true;
         $request->validate(
             [
                 'email_origem'          =>'email:rfc,filter',
@@ -44,7 +46,7 @@ class SyncJob extends Controller
             'subscribe_all' => true,
             'showpasswords' => true,
             'errorsmax' => 1000,
-            'dry' => true,
+            'dry' => $dry,
             'delete2duplicates' => true,
         ];
 
