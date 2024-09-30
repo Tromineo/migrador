@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  imapsync:
+    image: gilleslamiral/imapsync
+    container_name: imapsync_container
+    environment:
+      - TZ=America/Sao_Paulo
+    volumes:
+      - ./data:/data 
+    stdin_open: true
+    tty: true
+    command: tail -f /dev/null  
+
+
