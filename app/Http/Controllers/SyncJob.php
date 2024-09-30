@@ -8,12 +8,11 @@ class SyncJob extends Controller
 {
     public function index()
     {
-
+        return 1;
     }
 
     public function store(Request $request)
     {
-
         $dry = true;
         $request->validate(
             [
