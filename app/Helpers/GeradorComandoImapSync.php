@@ -4,25 +4,21 @@ namespace App\Helpers;
 
 class GeradorComandoImapSync {
 
+    const IMAPSYNC = 'imapsync_container';
+
     public static function getComando(array $params) 
     {   
         $contaOrigem        = $params['email_origem'];
-        $senhaOrigem        = $params['password_origem'];
+        $senhaOrigem        = $params['senha_origem'];
         $servidorOrigem     = $params['servidor_origem'];
-        $contaDestino       = $params['conta_destino'];
+        $contaDestino       = $params['email_destino'];
         $senhaDestino       = $params['senha_destino'];
-        $servidorDestino    = $params['servidorDestino'];
+        $servidorDestino    = $params['servidor_destino'];
 
         $dry = true; 
         
-        $cmd = "imapsync --host1 {} --user1 conta1@tromineo.com.br --password1 'Abc12!34' --host2 imap.kinghost.net --user2 conta2@tromineo.com.br --password2 'Abc12!34' --sep1 . --prefix1 INBOX. --regextrans2 s,^Inbox$,INBOX, --regextrans2 s,/,.,g --authmech1 LOGIN --timeout1 90 --authmech2 LOGIN --timeout 90 --sep2 . --prefix2 INBOX. --subscribe_all --showpasswords --errorsmax 1000 --dry --delete2duplicates --exclude 'Todos os e-mails|ALL|spam'";
-
-
-        return sprintf(
-            'docker exec %s imapsync --host1 source.imap.server --user1 %s --pass1 source_password --host2 destination.imap.server --user2 %s --pass2 destination_password',
-            escapeshellarg($dockerContainer),
-            escapeshellarg($sourceEmail),
-            escapeshellarg($destinationEmail)
-        );
+        $cmd = "imapsync --host1 {$servidorOrigem} --user1 {$contaOrigem} --password1 '{$senhaOrigem}' --host2 {$servidorDestino} --user2 {$contaDestino} --password2 '{$senhaDestino}' --sep1 . --prefix1 INBOX. --regextrans2 s,^Inbox$,INBOX, --regextrans2 s,/,.,g --authmech1 LOGIN --timeout1 90 --authmech2 LOGIN --timeout 90 --sep2 . --prefix2 INBOX. --subscribe_all --showpasswords --errorsmax 1000 --dry --delete2duplicates --exclude 'Todos os e-mails|ALL|spam'";
+        $cmd = "docker exec ".self::IMAPSYNC." ".$cmd;
+        return $cmd;
     }
 }
